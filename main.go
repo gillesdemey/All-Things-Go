@@ -49,18 +49,17 @@ func main() {
 	 * Send LED commands
 	 */
 
-	var currentStatus byte
-	var toWrite byte
+	var status byte
 
-	currentStatus, _ = grovepi.DigitalRead(diode.Pin)
+	status, _ = grovepi.DigitalRead(diode.Pin)
 
-	toWrite = invertByte(currentStatus)
-	grovepi.DigitalWrite(diode.Pin, toWrite)
+	status = invertByte(status)
+	grovepi.DigitalWrite(diode.Pin, status)
 
 	time.Sleep(500 * time.Millisecond)
 
-	toWrite = invertByte(toWrite)
-	grovepi.DigitalWrite(diode.Pin, toWrite)
+	status = invertByte(status)
+	grovepi.DigitalWrite(diode.Pin, status)
 
 }
 
