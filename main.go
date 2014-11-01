@@ -3,7 +3,6 @@ package main
 import (
 	att "github.com/gillesdemey/All-Things-Go/lib/allthingstalk"
 	gp "github.com/gillesdemey/All-Things-Go/lib/grovepi"
-	"log"
 	"time"
 )
 
@@ -16,8 +15,6 @@ func main() {
 	}
 
 	device.Setup()
-
-	log.Printf("Device: %+v\n", device)
 
 	/**
 	 * Create the sensors
@@ -57,8 +54,6 @@ func main() {
 
 	grovepi.PinMode(button.Pin, "input")
 	grovepi.PinMode(led.Pin, "output")
-
-	log.Printf("GrovePi: %+v\n", grovepi)
 
 	/**
 	 * Send LED commands
