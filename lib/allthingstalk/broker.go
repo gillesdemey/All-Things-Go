@@ -4,6 +4,7 @@ import (
 	// mqtt "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -34,7 +35,7 @@ func (device *Device) RegisterAsset(ioDevice *IODevice) {
 
 	payloadJSON, _ := json.Marshal(payload)
 
-	req, err := http.NewRequest("PUT", httpUri+"/api/asset/"+device.DeviceId+ioDevice.Id, bytes.NewReader(payloadJSON))
+	req, err := http.NewRequest("PUT", buildAssetUri(device, ioDevice), bytes.NewReader(payloadJSON))
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Auth-ClientKey", device.ClientKey)
@@ -57,4 +58,8 @@ func Subscribe() {
 func (device *Device) Setup() {
 	Connect()
 	Subscribe()
+}
+
+func buildAssetUri(device *Device, iodev *IODevice) string {
+	return fmt.Sprintf("%s/api/asset/%s%s", httpUri, device.DeviceId, iodev.Id)
 }
