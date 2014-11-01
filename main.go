@@ -1,8 +1,8 @@
 package main
 
 import (
-	att "github.com/gillesdemey/gif_go/lib/allthingstalk"
-	gp "github.com/gillesdemey/gif_go/lib/grovepi"
+	att "github.com/gillesdemey/All-Things-Go/lib/allthingstalk"
+	gp "github.com/gillesdemey/All-Things-Go/lib/grovepi"
 	"log"
 	"time"
 )
