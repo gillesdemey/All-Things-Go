@@ -63,16 +63,16 @@ func main() {
 
 	status, _ = grovepi.DigitalRead(led.Pin)
 
-	status = invertByte(status)
+	status = invertBit(status)
 	grovepi.DigitalWrite(led.Pin, status)
 
 	time.Sleep(500 * time.Millisecond)
 
-	status = invertByte(status)
+	status = invertBit(status)
 	grovepi.DigitalWrite(led.Pin, status)
 
 }
 
-func invertByte(b byte) byte {
+func invertBit(b byte) byte {
 	return byte(int(b) ^ 1)
 }
