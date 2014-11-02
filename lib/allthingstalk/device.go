@@ -23,14 +23,22 @@ func NewDevice(device *Device) *Device {
 }
 
 /**
+ * Add a generic IODevice
+ */
+func (device *Device) AddIODevice(ioDevice *io.IODevice) *io.IODevice {
+	device.IODevices = append(device.IODevices, ioDevice)
+	device.RegisterAsset(ioDevice)
+
+	return ioDevice
+}
+
+/**
  * Add an LED to the device configuration
  */
 func (device *Device) AddLED(config *io.Config) *io.IODevice {
 
 	led := io.NewLED(config)
-	device.IODevices = append(device.IODevices, led)
-
-	device.RegisterAsset(led)
+	device.AddIODevice(led)
 
 	return led
 }
@@ -41,9 +49,7 @@ func (device *Device) AddLED(config *io.Config) *io.IODevice {
 func (device *Device) AddButton(config *io.Config) *io.IODevice {
 
 	button := io.NewButton(config)
-	device.IODevices = append(device.IODevices, button)
-
-	device.RegisterAsset(button)
+	device.AddIODevice(button)
 
 	return button
 }
