@@ -9,6 +9,7 @@ type Device struct {
 	DeviceId  string
 	ClientId  string
 	ClientKey string
+	IODevices []*io.IODevice
 }
 
 /**
@@ -27,8 +28,9 @@ func NewDevice(device *Device) *Device {
 func (device *Device) AddLED(config *io.Config) *io.IODevice {
 
 	led := io.NewLED(config)
+	device.IODevices = append(device.IODevices, led)
 
-	defer device.RegisterAsset(led)
+	device.RegisterAsset(led)
 
 	return led
 }
@@ -39,8 +41,9 @@ func (device *Device) AddLED(config *io.Config) *io.IODevice {
 func (device *Device) AddButton(config *io.Config) *io.IODevice {
 
 	button := io.NewButton(config)
+	device.IODevices = append(device.IODevices, button)
 
-	defer device.RegisterAsset(button)
+	device.RegisterAsset(button)
 
 	return button
 }
