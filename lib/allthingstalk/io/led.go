@@ -7,11 +7,8 @@ package io
 func NewLED(config *Config) *IODevice {
 
 	return &IODevice{
-		Name:        config.Name,
-		Pin:         config.Pin,
-		Id:          config.Id,
-		Description: config.Description,
-		Type:        "actuator",
+		Config: config,
+		Type:   "actuator",
 		Profile: Profile{
 			Type: "int",
 		},

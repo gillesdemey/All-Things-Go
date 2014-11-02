@@ -7,11 +7,8 @@ package io
 func NewButton(config *Config) *IODevice {
 
 	return &IODevice{
-		Name:        config.Name,
-		Pin:         config.Pin,
-		Id:          config.Id,
-		Description: config.Description,
-		Type:        "sensor",
+		Config: config,
+		Type:   "sensor",
 		Profile: Profile{
 			Type: "bool",
 		},

@@ -14,12 +14,9 @@ type Config struct {
  * IODevice structure
  */
 type IODevice struct {
-	Name        string
-	Pin         byte
-	Id          string
-	Description string
-	Type        string
-	Profile     Profile
+	*Config
+	Type    string
+	Profile Profile
 }
 
 /**
