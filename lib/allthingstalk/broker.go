@@ -1,65 +1,82 @@
 package allthingstalk
 
 import (
-	// mqtt "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
-	"bytes"
-	"encoding/json"
 	"fmt"
+	MQTT "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
+	io "github.com/gillesdemey/All-Things-Go/lib/allthingstalk/io"
 	"log"
-	"net/http"
 )
 
-var httpUri = "http://beta.smartliving.io"
-var brokerUri = "http://broker.smartliving.io"
+var brokerUri = "tcp://broker.smartliving.io:1883"
 
-var httpClient *http.Client
-var brokerClient Broker
-
-func Connect() {
-	httpClient = &http.Client{}
-	log.Printf("Initialized HTTP client")
+type Broker struct {
+	Client *MQTT.MqttClient
 }
 
 /**
- * Registers your IODevice to the platform
+ * Create a new broker connection and subscribe to the correct
+ * topic for this device
  */
-func (device *Device) RegisterAsset(ioDevice *IODevice) {
+func NewBroker(device *Device) (*Broker, error) {
 
-	payload := RegisterPayload{
-		Name:        ioDevice.Name,
-		Description: ioDevice.Description,
-		Type:        ioDevice.Type,
-		Profile:     ioDevice.Profile,
-		DeviceId:    device.DeviceId,
+	// TODO: abstract the MessageHandler function
+	msgHandler := func(client *MQTT.MqttClient, msg MQTT.Message) {
+		log.Printf("TOPIC: %s\n", msg.Topic())
+		log.Printf("MSG: %s\n", msg.Payload())
 	}
 
-	payloadJSON, _ := json.Marshal(payload)
+	opts := MQTT.NewClientOptions()
 
-	req, err := http.NewRequest("PUT", buildAssetUri(device, ioDevice), bytes.NewReader(payloadJSON))
+	opts.AddBroker(brokerUri)
+	opts.SetClientId(device.DeviceId[:23]) // max 24 characters long
+	opts.SetDefaultPublishHandler(msgHandler)
 
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Auth-ClientKey", device.ClientKey)
-	req.Header.Set("Auth-ClientId", device.ClientId)
+	broker := &Broker{
+		Client: MQTT.NewClient(opts),
+	}
 
-	_, err = httpClient.Do(req)
+	_, err := broker.Client.Start()
 
 	if err != nil {
-		log.Fatalf("Error registering asset: %s", err)
+		return nil, err
 	}
 
-	log.Printf("Successfuly registered IODevice %+s\n", ioDevice.Name)
+	err = broker.subscribeToTopic(device)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return broker, nil
 }
 
-func Subscribe() {
+/**
+ * Subscribes to the device's MQTT topic
+ */
+func (broker *Broker) subscribeToTopic(device *Device) error {
 
-	log.Printf("Initialized Broker")
+	filter, err := MQTT.NewTopicFilter(buildTopic(device), byte(0)) // default QoS
+
+	if err != nil {
+		return err
+	}
+
+	_, err = broker.Client.StartSubscription(nil, filter)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func (device *Device) Setup() {
-	Connect()
-	Subscribe()
-}
-
-func buildAssetUri(device *Device, iodev *IODevice) string {
+/**
+ * Helper functions to build the correct URI's
+ */
+func buildAssetUri(device *Device, iodev *io.IODevice) string {
 	return fmt.Sprintf("%s/api/asset/%s%s", httpUri, device.DeviceId, iodev.Id)
+}
+
+func buildTopic(device *Device) string {
+	return fmt.Sprintf("m/%s/d/%s/#", device.ClientId, device.DeviceId)
 }

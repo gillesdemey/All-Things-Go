@@ -2,50 +2,38 @@ package main
 
 import (
 	att "github.com/gillesdemey/All-Things-Go/lib/allthingstalk"
+	"github.com/gillesdemey/All-Things-Go/lib/allthingstalk/io"
 	gp "github.com/gillesdemey/All-Things-Go/lib/grovepi"
 	"time"
 )
 
 func main() {
 
-	device := att.Device{
+	/**
+	 * Create a new device
+	 */
+	device := att.NewDevice(&att.Device{
 		DeviceId:  "jEGkKxDP9INnpsXciju0r9M",
 		ClientId:  "5454c20f30721aacc441ae6a",
 		ClientKey: "f4jjslau4l4",
-	}
-
-	device.Setup()
+	})
 
 	/**
-	 * Create the sensors
+	 * Add your IO devices (sensors, buttons, etc.)
 	 */
-	button := att.IODevice{
+	button := device.AddButton(&io.Config{
+		Description: "This is my button",
+		Id:          "my-button",
 		Name:        "Button",
 		Pin:         2,
-		Id:          "my-button",
-		Type:        "sensor",
-		Description: "This is my button",
-		Profile: att.Profile{
-			Type: "bool",
-		},
-	}
+	})
 
-	led := att.IODevice{
+	led := device.AddLED(&io.Config{
+		Description: "This is my LED",
+		Id:          "my-led",
 		Name:        "LED",
 		Pin:         3,
-		Id:          "my-led",
-		Type:        "actuator",
-		Description: "This is my LED",
-		Profile: att.Profile{
-			Type: "int",
-		},
-	}
-
-	/**
-	 * Register IO Devices
-	 */
-	device.RegisterAsset(&button)
-	device.RegisterAsset(&led)
+	})
 
 	/**
 	 * Initialize the GrovePi shield
@@ -58,7 +46,6 @@ func main() {
 	/**
 	 * Send LED commands
 	 */
-
 	var status byte
 
 	status, _ = grovepi.DigitalRead(led.Pin)
@@ -73,6 +60,9 @@ func main() {
 
 }
 
+/**
+ * Flippin' bits
+ */
 func invertBit(b byte) byte {
 	return byte(int(b) ^ 1)
 }
