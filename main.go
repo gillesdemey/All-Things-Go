@@ -21,14 +21,14 @@ func main() {
 	/**
 	 * Add your IO devices (sensors, buttons, etc.)
 	 */
-	button := device.AddButton(&io.Config{
+	button := device.NewButton(&io.Config{
 		Description: "This is my button",
 		Id:          "my-button",
 		Name:        "Button",
 		Pin:         2,
 	})
 
-	led := device.AddLED(&io.Config{
+	led := device.NewLED(&io.Config{
 		Description: "This is my LED",
 		Id:          "my-led",
 		Name:        "LED",

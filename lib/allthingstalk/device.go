@@ -35,7 +35,7 @@ func (device *Device) AddIODevice(ioDevice *io.IODevice) *io.IODevice {
 /**
  * Add an LED to the device configuration
  */
-func (device *Device) AddLED(config *io.Config) *io.IODevice {
+func (device *Device) NewLED(config *io.Config) *io.IODevice {
 
 	led := io.NewLED(config)
 	device.AddIODevice(led)
@@ -46,7 +46,7 @@ func (device *Device) AddLED(config *io.Config) *io.IODevice {
 /**
  * Add a Button to the device configuration
  */
-func (device *Device) AddButton(config *io.Config) *io.IODevice {
+func (device *Device) NewButton(config *io.Config) *io.IODevice {
 
 	button := io.NewButton(config)
 	device.AddIODevice(button)
