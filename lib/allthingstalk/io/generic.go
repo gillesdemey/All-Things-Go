@@ -29,7 +29,7 @@ type Profile struct {
 /**
  * The payload we need to construct to register an IODevice with the API endpoint
  */
-type RegisterPayload struct {
+type Registration struct {
 	Name        string  `json:"name"`
 	Description string  `json:"description,omitempty"`
 	Type        string  `json:"is"`

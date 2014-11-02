@@ -16,7 +16,7 @@ var httpUri = "http://beta.smartliving.io"
  */
 func (device *Device) RegisterAsset(ioDevice *io.IODevice) {
 
-	json, _ := json.Marshal(io.RegisterPayload{
+	json, _ := json.Marshal(io.Registration{
 		Name:        ioDevice.Name,
 		Description: ioDevice.Description,
 		Type:        ioDevice.Type,
