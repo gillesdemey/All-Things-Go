@@ -1,10 +1,19 @@
 package allthingstalk
 
 import (
+	"errors"
 	"github.com/gillesdemey/All-Things-Go/lib/allthingstalk/io"
 	"log"
 )
 
+/**
+ * predefined errors
+ */
+var NOTFOUND = errors.New("NOTFOUND")
+
+/**
+ * Device structure
+ */
 type Device struct {
 	DeviceId  string
 	ClientId  string
@@ -52,6 +61,20 @@ func (device *Device) NewButton(config *io.Config) *io.IODevice {
 	device.AddIODevice(button)
 
 	return button
+}
+
+/**
+ * Searches for a device in the devices' list with the specified unique id
+ */
+func (device *Device) GetIODeviceById(id string) (*io.IODevice, error) {
+
+	for _, ioDevice := range device.IODevices {
+		if ioDevice.Id == id {
+			return ioDevice, nil
+		}
+	}
+
+	return nil, NOTFOUND
 }
 
 /**
