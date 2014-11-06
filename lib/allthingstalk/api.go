@@ -11,9 +11,7 @@ import (
 var httpClient *http.Client = &http.Client{}
 var httpUri = "http://beta.smartliving.io"
 
-/**
- * Registers your IODevice to the platform
- */
+// Registers your IODevice to the platform
 func (device *Device) RegisterAsset(ioDevice *io.IODevice) {
 
 	json, _ := json.Marshal(io.Registration{

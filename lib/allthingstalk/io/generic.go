@@ -1,8 +1,6 @@
 package io
 
-/**
- * IODevice configuration structure
- */
+// IODevice configuration structure
 type Config struct {
 	Name        string
 	Pin         byte
@@ -10,25 +8,19 @@ type Config struct {
 	Description string
 }
 
-/**
- * IODevice structure
- */
+// IODevice structure
 type IODevice struct {
 	*Config
 	Type    string
 	Profile Profile
 }
 
-/**
- * IODevice's profile structure
- */
+// IODevice's profile structure
 type Profile struct {
 	Type string `json:"type"`
 }
 
-/**
- * The payload we need to construct to register an IODevice with the API endpoint
- */
+// The payload we need to construct to register an IODevice with the API endpoint
 type Registration struct {
 	Name        string  `json:"name"`
 	Description string  `json:"description,omitempty"`

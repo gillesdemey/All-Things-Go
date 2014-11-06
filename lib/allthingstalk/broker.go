@@ -13,10 +13,9 @@ type Broker struct {
 	Client *MQTT.MqttClient
 }
 
-/**
- * Create a new broker connection and subscribe to the correct
- * topic for this device
- */
+
+ // Create a new broker connection and subscribe to the correct
+ // topic for this device
 func NewBroker(device *Device) (*Broker, error) {
 
 	// TODO: abstract the MessageHandler function
@@ -50,9 +49,7 @@ func NewBroker(device *Device) (*Broker, error) {
 	return broker, nil
 }
 
-/**
- * Subscribes to the device's MQTT topic
- */
+// Subscribes to the device's MQTT topic
 func (broker *Broker) subscribeToTopic(device *Device) error {
 
 	filter, err := MQTT.NewTopicFilter(buildTopic(device), byte(0)) // default QoS
@@ -70,9 +67,7 @@ func (broker *Broker) subscribeToTopic(device *Device) error {
 	return nil
 }
 
-/**
- * Helper functions to build the correct URI's
- */
+// Helper functions to build the correct URI's
 func buildAssetUri(device *Device, iodev *io.IODevice) string {
 	return fmt.Sprintf("%s/api/asset/%s%s", httpUri, device.DeviceId, iodev.Id)
 }

@@ -6,14 +6,10 @@ import (
 	"log"
 )
 
-/**
- * predefined errors
- */
+// Predefined error types
 var NOTFOUND = errors.New("NOTFOUND")
 
-/**
- * Device structure
- */
+// Device structure
 type Device struct {
 	DeviceId  string
 	ClientId  string
@@ -21,9 +17,7 @@ type Device struct {
 	IODevices []*io.IODevice
 }
 
-/**
- * Constructor for a new Device
- */
+// Constructor for a new Device
 func NewDevice(device *Device) *Device {
 
 	device.Setup()
@@ -31,9 +25,7 @@ func NewDevice(device *Device) *Device {
 	return device
 }
 
-/**
- * Add a generic IODevice
- */
+// Add a generic IODevice
 func (device *Device) AddIODevice(ioDevice *io.IODevice) *io.IODevice {
 	device.IODevices = append(device.IODevices, ioDevice)
 	device.RegisterAsset(ioDevice)
@@ -41,9 +33,7 @@ func (device *Device) AddIODevice(ioDevice *io.IODevice) *io.IODevice {
 	return ioDevice
 }
 
-/**
- * Add an LED to the device configuration
- */
+// Add an LED to the device configuration
 func (device *Device) NewLED(config *io.Config) *io.IODevice {
 
 	led := io.NewLED(config)
@@ -52,9 +42,7 @@ func (device *Device) NewLED(config *io.Config) *io.IODevice {
 	return led
 }
 
-/**
- * Add a Button to the device configuration
- */
+// Add a Button to the device configuration
 func (device *Device) NewButton(config *io.Config) *io.IODevice {
 
 	button := io.NewButton(config)
@@ -63,9 +51,7 @@ func (device *Device) NewButton(config *io.Config) *io.IODevice {
 	return button
 }
 
-/**
- * Searches for a device in the devices' list with the specified unique id
- */
+// Searches for a device in the devices' list with the specified unique id
 func (device *Device) GetIODeviceById(id string) (*io.IODevice, error) {
 
 	for _, ioDevice := range device.IODevices {
@@ -77,9 +63,7 @@ func (device *Device) GetIODeviceById(id string) (*io.IODevice, error) {
 	return nil, NOTFOUND
 }
 
-/**
- * Set up the appropriate Broker socket connection
- */
+// Set up the appropriate Broker socket connection
 func (device *Device) Setup() {
 
 	_, err := NewBroker(device)

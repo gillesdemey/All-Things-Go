@@ -1,9 +1,7 @@
 package io
 
-/**
- * Returns an IODevice pointer with the correct Type and Profile
- * for a Button
- */
+// Returns an IODevice pointer with the correct Type and Profile
+// for a Button
 func NewButton(config *Config) *IODevice {
 
 	return &IODevice{
