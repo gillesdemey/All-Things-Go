@@ -26,5 +26,4 @@ _testmain.go
 *.DS_Store
 
 # binaries
-main
-raspi
+example/rpi

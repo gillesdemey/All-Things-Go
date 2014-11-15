@@ -2,7 +2,7 @@ package allthingstalk
 
 import (
 	"errors"
-	"github.com/gillesdemey/All-Things-Go/lib/allthingstalk/io"
+	"github.com/gillesdemey/All-Things-Go/io"
 	"log"
 )
 
@@ -19,9 +19,7 @@ type Device struct {
 
 // Constructor for a new Device
 func NewDevice(device *Device) *Device {
-
 	device.Setup()
-
 	return device
 }
 

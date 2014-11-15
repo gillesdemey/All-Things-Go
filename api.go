@@ -3,7 +3,7 @@ package allthingstalk
 import (
 	"bytes"
 	"encoding/json"
-	io "github.com/gillesdemey/All-Things-Go/lib/allthingstalk/io"
+	io "github.com/gillesdemey/All-Things-Go/io"
 	"log"
 	"net/http"
 )

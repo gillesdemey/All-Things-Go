@@ -3,7 +3,7 @@ package allthingstalk
 import (
 	"fmt"
 	MQTT "git.eclipse.org/gitroot/paho/org.eclipse.paho.mqtt.golang.git"
-	io "github.com/gillesdemey/All-Things-Go/lib/allthingstalk/io"
+	io "github.com/gillesdemey/All-Things-Go/io"
 	"log"
 )
 
@@ -13,9 +13,8 @@ type Broker struct {
 	Client *MQTT.MqttClient
 }
 
-
- // Create a new broker connection and subscribe to the correct
- // topic for this device
+// Create a new broker connection and subscribe to the correct
+// topic for this device
 func NewBroker(device *Device) (*Broker, error) {
 
 	// TODO: abstract the MessageHandler function
