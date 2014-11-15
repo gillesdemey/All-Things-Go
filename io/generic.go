@@ -26,5 +26,5 @@ type Registration struct {
 	Description string  `json:"description,omitempty"`
 	Type        string  `json:"is"`
 	Profile     Profile `json:"profile"`
-	DeviceId    string  `json:"deviceId"`
+	DeviceID    string  `json:"deviceId"`
 }

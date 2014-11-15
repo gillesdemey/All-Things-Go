@@ -9,6 +9,7 @@ import (
 
 var brokerUri = "tcp://broker.smartliving.io:1883"
 
+// MQTT Broker structure
 type Broker struct {
 	Client *MQTT.MqttClient
 }
@@ -26,7 +27,7 @@ func NewBroker(device *Device) (*Broker, error) {
 	opts := MQTT.NewClientOptions()
 
 	opts.AddBroker(brokerUri)
-	opts.SetClientId(device.DeviceId[:23]) // max 24 characters long
+	opts.SetClientID(device.DeviceID[:23]) // max 24 characters long
 	opts.SetDefaultPublishHandler(msgHandler)
 
 	broker := &Broker{
@@ -68,9 +69,9 @@ func (broker *Broker) subscribeToTopic(device *Device) error {
 
 // Helper functions to build the correct URI's
 func buildAssetUri(device *Device, iodev *io.IODevice) string {
-	return fmt.Sprintf("%s/api/asset/%s%s", httpUri, device.DeviceId, iodev.Id)
+	return fmt.Sprintf("%s/api/asset/%s%s", httpUri, device.DeviceID, iodev.Id)
 }
 
 func buildTopic(device *Device) string {
-	return fmt.Sprintf("m/%s/d/%s/#", device.ClientId, device.DeviceId)
+	return fmt.Sprintf("m/%s/d/%s/#", device.ClientID, device.DeviceID)
 }

@@ -11,8 +11,8 @@ func main() {
 
 	// Create a new device
 	device := att.NewDevice(&att.Device{
-		DeviceId:  "jEGkKxDP9INnpsXciju0r9M",
-		ClientId:  "5454c20f30721aacc441ae6a",
+		DeviceID:  "jEGkKxDP9INnpsXciju0r9M",
+		ClientID:  "5454c20f30721aacc441ae6a",
 		ClientKey: "f4jjslau4l4",
 	})
 

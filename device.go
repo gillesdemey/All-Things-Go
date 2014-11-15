@@ -7,12 +7,12 @@ import (
 )
 
 // Predefined error types
-var NOTFOUND = errors.New("NOTFOUND")
+var ErrNotFound = errors.New("NOTFOUND")
 
 // Device structure
 type Device struct {
-	DeviceId  string
-	ClientId  string
+	DeviceID  string
+	ClientID  string
 	ClientKey string
 	IODevices []*io.IODevice
 }
@@ -50,7 +50,7 @@ func (device *Device) NewButton(config *io.Config) *io.IODevice {
 }
 
 // Searches for a device in the devices' list with the specified unique id
-func (device *Device) GetIODeviceById(id string) (*io.IODevice, error) {
+func (device *Device) GetIODeviceByID(id string) (*io.IODevice, error) {
 
 	for _, ioDevice := range device.IODevices {
 		if ioDevice.Id == id {
@@ -58,7 +58,7 @@ func (device *Device) GetIODeviceById(id string) (*io.IODevice, error) {
 		}
 	}
 
-	return nil, NOTFOUND
+	return nil, ErrNotFound
 }
 
 // Set up the appropriate Broker socket connection

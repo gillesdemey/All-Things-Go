@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-var httpClient *http.Client = &http.Client{}
+var httpClient = &http.Client{}
 var httpUri = "http://beta.smartliving.io"
 
 // Registers your IODevice to the platform
@@ -19,7 +19,7 @@ func (device *Device) RegisterAsset(ioDevice *io.IODevice) {
 		Description: ioDevice.Description,
 		Type:        ioDevice.Type,
 		Profile:     ioDevice.Profile,
-		DeviceId:    device.DeviceId,
+		DeviceID:    device.DeviceID,
 	})
 
 	req, err := http.NewRequest(
@@ -29,7 +29,7 @@ func (device *Device) RegisterAsset(ioDevice *io.IODevice) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Auth-ClientKey", device.ClientKey)
-	req.Header.Set("Auth-ClientId", device.ClientId)
+	req.Header.Set("Auth-ClientID", device.ClientID)
 
 	_, err = httpClient.Do(req)
 
